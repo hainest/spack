@@ -44,6 +44,11 @@ class Papi(Package):
     # https://bitbucket.org/icl/papi/issues/46/cannot-compile-on-arch-linux
     patch('https://bitbucket.org/icl/papi/commits/53de184a162b8a7edff48fed01a15980664e15b1/raw', sha256='64c57b3ad4026255238cc495df6abfacc41de391a0af497c27d0ac819444a1f8', when='@5.4.0:5.6.99%gcc@8:')
 
+    def flag_handler(self, name, flags):
+        if name in ['cflags','cxxflags']:
+            flags.append(self.compiler.pic_flag)
+        return (flags, None, None)
+
     def install(self, spec, prefix):
         if '+lmsensors' in spec:
             with working_dir("src/components/lmsensors"):
