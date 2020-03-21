@@ -59,6 +59,16 @@ class Papi(AutotoolsPackage):
 
     configure_directory = 'src'
 
+    def flag_handler(self, name, flags):
+        if name == 'cflags':
+            flags.append(self.compiler.cc_pic_flag)
+        elif name == 'cxxflags':
+            flags.append(self.compiler.cxx_pic_flag)
+        elif name == 'fflags':
+            flags.append(self.compiler.fc_pic_flag)
+            flags.append(self.compiler.f77_pic_flag)
+        return (flags, None, None)
+
     def setup_build_environment(self, env):
         if '+lmsensors' in self.spec and self.version >= Version('6'):
             env.set('PAPI_LMSENSORS_ROOT', self.spec['lm-sensors'].prefix)
