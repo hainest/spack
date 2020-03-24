@@ -121,6 +121,14 @@ class R(AutotoolsPackage):
             tcl_config_path = join_path(spec['tcl'].prefix,
                                         'lib64', 'tclConfig.sh')
 
+        link_paths = [
+            join_path(prefix, 'rlib', 'R', 'lib'),
+            spec['readline'].prefix
+        ]
+        ld_flags = 'LDFLAGS='
+        for p in link_paths:
+          ld_flags += '-L{0} -Wl,-rpath,{0} '.format(p)
+
         config_args = [
             '--libdir={0}'.format(join_path(prefix, 'rlib')),
             '--enable-R-shlib',
@@ -128,8 +136,7 @@ class R(AutotoolsPackage):
             '--enable-R-framework=no',
             '--without-recommended-packages',
             '--with-tcl-config={0}'.format(tcl_config_path),
-            'LDFLAGS=-L{0} -Wl,-rpath,{0}'.format(join_path(prefix, 'rlib',
-                                                            'R', 'lib')),
+            ld_flags
         ]
         if '^tk' in spec:
             tk_config_path = join_path(spec['tk'].prefix.lib, 'tkConfig.sh')
