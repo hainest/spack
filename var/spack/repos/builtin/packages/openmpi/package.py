@@ -362,6 +362,16 @@ class Openmpi(AutotoolsPackage):
             env.set('ac_cv_header_gpfs_h', 'no')
             env.set('ac_cv_header_gpfs_fcntl_h', 'no')
 
+    def flag_handler(self, name, flags):
+        if name == 'cflags':
+            flags.append(self.compiler.cc_pic_flag)
+        elif name == 'cxxflags':
+            flags.append(self.compiler.cxx_pic_flag)
+        elif name == 'fflags':
+            flags.append(self.compiler.fc_pic_flag)
+            flags.append(self.compiler.f77_pic_flag)
+        return (flags, None, None)
+
     def configure_args(self):
         spec = self.spec
         config_args = [
