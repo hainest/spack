@@ -402,6 +402,12 @@ class Openmpi(AutotoolsPackage):
         perl = which('perl')
         perl('autogen.pl')
 
+    def flag_handler(self, name, flags):
+        if name in ['cflags','cxxflags','fflags']:
+            flags.append(self.compiler.pic_flag)
+        return (flags, None, None)
+
+
     def configure_args(self):
         spec = self.spec
         config_args = [
