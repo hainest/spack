@@ -33,6 +33,8 @@ class Dyninst(CMakePackage):
     variant('stat_dysect', default=False,
             description="Patch for STAT's DySectAPI")
 
+    conflicts('%clang', when='@:10.1.0')
+
     boost_libs = '+atomic+chrono+date_time+filesystem+system+thread+timer'
 
     depends_on('boost@1.61.0:' + boost_libs, when='@10.1.0:')
