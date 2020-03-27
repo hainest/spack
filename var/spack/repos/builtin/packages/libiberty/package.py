@@ -32,6 +32,10 @@ class Libiberty(AutotoolsPackage, GNUMirrorPackage):
     # Configure and build just libiberty.
     configure_directory = 'libiberty'
 
+    # gcc-specific flags are used during configuration
+    # (e.g., -print-multi-os-directory)
+    conflicts('%clang')
+
     # Set default cflags (-g -O2), add -fPIC if requested, and move to
     # the configure line.
     def flag_handler(self, name, flags):

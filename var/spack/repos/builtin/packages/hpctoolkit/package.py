@@ -60,8 +60,8 @@ class Hpctoolkit(AutotoolsPackage):
         ' +graph +regex +shared +multithreaded visibility=global'
     )
 
-    depends_on('binutils+libiberty~nls', type='link', when='@master')
-    depends_on('binutils@:2.33.1+libiberty~nls', type='link', when='@:2020.03.99')
+    depends_on('binutils+libiberty~nls%gcc', type='link', when='@master')
+    depends_on('binutils@:2.33.1+libiberty~nls%gcc', type='link', when='@:2020.03.99')
     depends_on('boost' + boost_libs)
     depends_on('bzip2+shared', type='link')
     depends_on('dyninst@9.3.2:')
