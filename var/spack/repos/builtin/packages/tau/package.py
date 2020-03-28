@@ -109,6 +109,16 @@ class Tau(Package):
 
     patch('unwind.patch', when="@2.29")
 
+    def flag_handler(self, name, flags):
+        if name == 'cflags':
+            flags.append(self.compiler.cc_pic_flag)
+        elif name == 'cxxflags':
+            flags.append(self.compiler.cxx_pic_flag)
+        elif name == 'fflags':
+            flags.append(self.compiler.fc_pic_flag)
+            flags.append(self.compiler.f77_pic_flag)
+        return (flags, None, None)
+
     def set_compiler_options(self, spec):
 
         useropt = ["-O2 -g", self.rpath_args]
