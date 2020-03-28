@@ -105,6 +105,11 @@ class Tau(Package):
     conflicts('+adios2', when='@:2.29.1')
     conflicts('+sqlite', when='@:2.29.1')
 
+    def flag_handler(self, name, flags):
+        if name in ['cflags','cxxflags','fflags']:
+            flags.append(self.compiler.pic_flag)
+        return (flags, None, None)
+
     def set_compiler_options(self, spec):
 
         useropt = ["-O2 -g", self.rpath_args]
