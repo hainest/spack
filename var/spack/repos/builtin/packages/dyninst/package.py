@@ -39,7 +39,7 @@ class Dyninst(CMakePackage):
 
     depends_on('boost@1.61.0:' + boost_libs, when='@10.1.0:')
     depends_on('boost@1.61.0:1.69.99' + boost_libs, when='@:10.0.99')
-    depends_on('libiberty+pic')
+    depends_on('libiberty+pic%gcc')
 
     # Dyninst uses elf@1 (elfutils) starting with 9.3.0, and used
     # elf@0 (libelf) before that.
